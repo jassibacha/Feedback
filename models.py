@@ -53,11 +53,12 @@ class User(db.Model):
             return False
 
 
-# class Tweet(db.Model):
-#     __tablename__ = 'tweets'
+class Feedback(db.Model):
+    __tablename__ = 'feedback'
 
-#     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-#     text = db.Column(db.Text, nullable=False)
-#     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(100), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    username = db.Column(db.Text, db.ForeignKey('users.username'))
 
-#     user = db.relationship('User', backref="tweets")
+    user = db.relationship('User', backref="feedback", cascade="all, delete")

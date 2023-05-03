@@ -1,0 +1,62 @@
+{% extends 'base.html' %} {% block content %}
+<h1>Your Profile</h1>
+<ul class="list-group">
+    <li class="list-group-item">Username: {{user.username}}</li>
+    <li class="list-group-item">Email: {{user.email}}</li>
+    <li class="list-group-item">First Name: {{user.first_name}}</li>
+    <li class="list-group-item">Last Name: {{user.last_name}}</li>
+</ul>
+<div class="d-flex flex-row justify-content-between mt-3">
+    <a href="/users/{{user.username}}/feedback/add" class="btn btn-success"
+        >Add Feedback</a
+    >
+    <a href="/users/{{user.username}}/delete" class="btn btn-danger"
+        >Delete User</a
+    >
+</div>
+
+<div class="mt-5">
+    <h3>All Feedback</h3>
+    <div class="row">
+        {% for f in user.feedback %}
+        <div class="col-sm-12 col-lg-6">
+            <div class="card my-4">
+                <div class="card-body">
+                    <div
+                        class="card-title d-flex flex-row justify-content-between"
+                    >
+                        <h5>{{f.title}}</h5>
+                        {% if session['username'] == f.username %}
+                        <div>
+                            <a
+                                href="/feedback/{{f.id}}/update"
+                                class="btn btn-sm btn-primary"
+                            >
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                            <form
+                                style="display: inline"
+                                action="/feedback/{{f.id}}/delete"
+                                method="POST"
+                            >
+                                <button class="btn btn-sm btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        Posted by {{f.username}}
+                    </h6>
+
+                    <p class="card-text">{{f.content}}</p>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
