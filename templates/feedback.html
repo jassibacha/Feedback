@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block content %}
 
 <h1 class="display-1">
-    {# {% if feedback %} Edit Feedback {% else %} Add Feedback {% endif %} #}
+    {% if feedback %} Edit Feedback {% else %} Add Feedback {% endif %}
 </h1>
 
 <form method="POST">
@@ -16,7 +16,7 @@
     {% endfor %}
 
     <button class="btn btn-success" type="submit">
-        {# {% if feedback %} Update {% else %} Add Now {% endif %} #}test
+        {% if feedback %} Update {% else %} Add Now {% endif %}
     </button>
     <a href="/users/{{feedback.username}}" class="btn btn-outline-secondary"
         >Cancel</a
