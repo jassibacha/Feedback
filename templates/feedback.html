@@ -18,8 +18,6 @@
     <button class="btn btn-success" type="submit">
         {% if feedback %} Update {% else %} Add Now {% endif %}
     </button>
-    <a href="/users/{{feedback.username}}" class="btn btn-outline-secondary"
-        >Cancel</a
-    >
+    <a href="/users/{{username}}" class="btn btn-outline-secondary">Cancel</a>
 </form>
 {% endblock %}

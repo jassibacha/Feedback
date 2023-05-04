@@ -82,7 +82,7 @@ def register_user():
             return render_template('register.html', form=form)
         session['username'] = new_user.username
         flash(f'Account created. Welcome {new_user.username}!', "success")
-        return redirect('/secret')
+        return redirect(url_for("user_page", username=login_username()))
 
     return render_template('register.html', form=form)
 
@@ -105,7 +105,7 @@ def login_user():
         if user:
             flash(f"Welcome Back, {user.username}!", "primary")
             session['username'] = username
-            return redirect(f'/users/{session["username"]}')
+            return redirect(url_for("user_page", username=login_username()))
         else:
             form.username.errors = ['Invalid username or password.']
 
@@ -149,6 +149,8 @@ def user_delete(username):
 @yourself_only
 def feedback_add(username):
     """Form to add feedback and display feedback of current logged in user"""
+    # import pdb
+    # pdb.set_trace()
     form = FeedbackForm()
     user = User.query.get_or_404(username)
 
@@ -162,7 +164,7 @@ def feedback_add(username):
             db.session.commit()
             flash(f'Feedback "{title}" Added!', 'primary')
             # session['username'] = username
-            return redirect(url_for("user_page" , username=login_username()))
+            return redirect(url_for("user_page" , username=user.username))
         else:
             form.username.errors = ['Ensure both fields are not empty.']
     return render_template('feedback.html', form=form)
@@ -175,6 +177,7 @@ def feedback_update(feedback_id):
     """Form to update feedback and display feedback of current logged in user"""
 
     feedback = Feedback.query.get_or_404(feedback_id)
+    username = feedback.username
 
     if feedback.username != login_username():
         flash('Update your own feedback only, Please!' , 'danger')
@@ -191,8 +194,23 @@ def feedback_update(feedback_id):
         flash(f'Feedback "{feedback.title}" Updated!', 'primary')
         return redirect(url_for("user_page" , username=login_username()))
     # pass feedback in at the end to help swap the add/edit text on the html
-    return render_template('feedback.html', form=form, feedback=feedback)
+    return render_template('feedback.html', form=form, feedback=feedback, username=username)
 
+
+@app.route('/feedback/<int:feedback_id>/delete', methods=['POST'])
+@logged_in
+def feedback_delete(feedback_id):
+    """Delete the feedback"""
+    feedback = Feedback.query.get_or_404(feedback_id)
+    temp_username = feedback.username
+    temp_title = feedback.title
+    if temp_username != login_username():
+        flash('Delete your own feedback only please!' , 'danger')
+        return redirect(url_for("user_page" , username=login_username()))
+    db.session.delete(feedback)
+    db.session.commit()
+    flash(f'Feedback "{temp_title}" deleted.', 'primary')
+    return redirect(url_for("user_page", username=temp_username))
 
 # @app.route('/tweets/<int:id>', methods=["POST"])
 # def delete_tweet(id):
