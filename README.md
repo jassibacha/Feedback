@@ -4,6 +4,8 @@ Let's be honest, this shouldn't be called Feedback at all. You don't leave "Feed
 
 -   Parts 1 - 8: Completed
 
+Beyond the existing further study goals, I took it upon myself to learn about flask decorators and wrapping to set up easier ways to confirm that people were logged in or that they were viewing a page they needed to be the specific user to access. This was a fun little learning experience and I can tell it's going to come in handy in the future.
+
 ### Further Study Goals
 
 -   Make sure your registration and authentication logic is being handled in your **_models.py_** - **DONE**
