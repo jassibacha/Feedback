@@ -4,9 +4,10 @@ from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, User, Feedback
 from forms import *
 from sqlalchemy.exc import IntegrityError
-#from secrets import SECRET_KEY
+from dotenv import load_dotenv
 
 app = Flask(__name__)
+load_dotenv() 
 #app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///feedback"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ECHO"] = True
