@@ -7,10 +7,10 @@ from sqlalchemy.exc import IntegrityError
 #from secrets import SECRET_KEY
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///feedback"
+#app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///feedback"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ECHO"] = True
-app.config["SECRET_KEY"] = '87dsf9a87sdf98a7sd89f78s9dfa98sd789s'
+#app.config["SECRET_KEY"] = '87dsf9a87sdf98a7sd89f78s9dfa98sd789s'
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.app_context().push()
 
